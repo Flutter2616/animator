@@ -55,16 +55,18 @@ class _HomescreenState extends State<Homescreen>
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-              return InkWell(onTap: () {
-                Navigator.pushNamed(context, 'detail',arguments: index);
-              },
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, 'detail', arguments: index);
+                },
                 child: Stack(
-                  alignment: Alignment(-1, 0.6),
+                  alignment: Alignment(-0.9, 0),
                   children: [
                     Container(
                       width: 80.w,
                       height: 15.h,
-                      margin: EdgeInsets.only(left: 70, right: 20, top: 15,bottom: 15),
+                      margin: EdgeInsets.only(
+                          left: 70, right: 20, top: 15, bottom: 15),
                       padding: EdgeInsets.only(left: 70, right: 20, top: 30),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -120,8 +122,22 @@ class _HomescreenState extends State<Homescreen>
                         ],
                       ),
                     ),
-                    Image.asset("${controller.planetlist[index].image}",
-                        width: 15.h, height: 15.h, fit: BoxFit.fill),
+                    AnimatedBuilder(builder: (context, child) {
+                      return Transform.rotate(angle: animationController!.value*2*pi,child: child);
+                    },animation: animationController!,
+                      child: Container(
+                        height: 110,
+                        width: 110,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          // color: Colors.amber,
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "${controller.planetlist[index].image}"),
+                              fit: BoxFit.contain),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
